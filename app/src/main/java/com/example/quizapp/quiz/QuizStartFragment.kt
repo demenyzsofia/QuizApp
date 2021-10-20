@@ -1,6 +1,12 @@
 package com.example.quizapp.quiz
 
+import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.provider.ContactsContract
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,9 +15,16 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContract
+
 import androidx.navigation.fragment.findNavController
+
+
+
 import com.example.quizapp.R
 import com.example.quizapp.TAG
+
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -29,6 +42,7 @@ class QuizStartFragment : Fragment() {
     private var param2: String? = null
     private lateinit var playerName: EditText
     private lateinit var startButton: Button
+    private lateinit var contactButton : Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,7 +57,7 @@ class QuizStartFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        //atalakitjuk majd ugz kuljdjuk
+        //atalakitjuk majd ugy kuljdjuk
         val view = inflater.inflate(R.layout.fragment_quiz_start, container, false)
         //ha nem null
         view?.apply {
@@ -54,18 +68,49 @@ class QuizStartFragment : Fragment() {
         return view
     }
 
+
+
+    @SuppressLint("Range")
+    private val getPerson= registerForActivityResult(PickContact()) {
+        val cursor = requireActivity().contentResolver.query(it!!, null, null, null, null)
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                val chosenName = cursor?.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME))
+                Log.i(TAG, "Name: $chosenName")
+
+                val editText = view?.findViewById<EditText>(R.id.playerNameInput)
+                editText?.setText(chosenName)
+            }
+        }
+    }
     private fun registerListeners(view: View) {
         startButton.setOnClickListener{
             Toast.makeText(activity,"Start button pressed",Toast.LENGTH_SHORT).show()
             Log.i(TAG,playerName.text.toString())
             findNavController().navigate(R.id.action_quizStartFragment_to_questionFragment)
         }
+        contactButton.setOnClickListener {
+            getPerson.launch(0)
+        }
     }
 
     private fun initializeView(view: View) {
         playerName= view.findViewById(R.id.playerNameInput)
         startButton = view.findViewById(R.id.startButton)
+        contactButton = view.findViewById(R.id.contact_button)
     }
+    class PickContact : ActivityResultContract<Int, Uri?>() {
+        override fun createIntent(context: Context, ringtoneType: Int) =
+            Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI)
+
+        override fun parseResult(resultCode: Int, result: Intent?) : Uri? {
+            if (resultCode != Activity.RESULT_OK) {
+                return null
+            }
+            return result?.data
+        }
+    }
+
 
     companion object {
         /**
