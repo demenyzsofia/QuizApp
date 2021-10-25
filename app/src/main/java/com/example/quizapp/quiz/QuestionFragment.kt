@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
-import com.example.quizapp.models.Question
 import android.widget.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
@@ -15,8 +14,7 @@ import androidx.navigation.findNavController
 import com.example.quizapp.R
 import com.example.quizapp.TAG
 import com.example.quizapp.databinding.FragmentQuestionBinding
-import com.example.quizapp.models.numCompletedQuizzes
-import com.example.quizapp.models.questions
+import com.example.quizapp.models.*
 import com.example.quizapp.shared.QuizViewModel
 
 
@@ -33,14 +31,9 @@ private const val ARG_PARAM2 = "param2"
  */
 class QuestionFragment : Fragment() {
     lateinit var binding: FragmentQuestionBinding
-
-    private lateinit var nextbutton: Button
     lateinit var currentQuestion: Question
     lateinit var answers: MutableList<String>
 
-
-    //private var questionIndex = 1
-    private val numQuestions = 3
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,36 +45,34 @@ class QuestionFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
+        //Inflate the layout for this fragment
         binding = DataBindingUtil.inflate<FragmentQuestionBinding>(
             inflater, R.layout.fragment_question, container, false)
         randomizeQuestions()
         binding.nextButton.setOnClickListener {
             if (processAnswer(it)== true){
-                numCorectAnswers++;
+
+                numCorrectAnswers++;
+                Log.i(TAG,"itt"+numCorrectAnswers.toString())
             }
             if ( questionIndex < numQuestions) {
+
                 //Show next question
-                //setQuestion()
                 it.findNavController().navigate(R.id.action_questionFragment_self)
             } else {
                 //End of the test
                 if (questionIndex == numQuestions) {
-                    ++numCompletedQuizzes
                     //activate questionEndFragment
-                    it.findNavController()
-                        .navigate(R.id.action_questionFragment_to_questionEndFragment)
-
+                    it.findNavController().navigate(R.id.action_questionFragment_to_questionEndFragment)
+                    questionIndex = 0
+                    numCorrectAnswers = 0
                 }
             }
         }
         return binding.root
-
-        return view
     }
 
-
-    //  Returns true in case of correct answer otherwise false
+    //Returns true in case of correct answer otherwise false
     private fun processAnswer(it: View?): Boolean {
         val result = binding.questionRadioGroup.checkedRadioButtonId
         //Do nothing when nothing is selected
@@ -105,7 +96,9 @@ class QuestionFragment : Fragment() {
 
 
     private fun showQuestion() {
-        Log.i(TAG,"itt")
+        if (questionIndex == numQuestions-1){
+            binding.nextButton.text="Submit"
+        }
         questionIndex++
         val index = questionIndex
         val questionTextStr = "$index. " + currentQuestion.text
@@ -114,8 +107,7 @@ class QuestionFragment : Fragment() {
         binding.secondAnswerButton.text = answers[1]
         binding.thirdAnswerButton.text = answers[2]
         binding.fourthAnswerButton.text = answers[3]
-        //Clear RadioButton selection
-        binding.questionRadioGroup.clearCheck()
+
     }
 
     private fun setQuestion() {
@@ -128,7 +120,6 @@ class QuestionFragment : Fragment() {
     }
     private fun randomizeQuestions() {
         questions.shuffle()
-        //questionIndex = 0
         setQuestion()
     }
 
@@ -152,7 +143,6 @@ class QuestionFragment : Fragment() {
                 }
             }
         var questionIndex: Int = 0
-        var numCorectAnswers: Int = 0
     }
 }
 
