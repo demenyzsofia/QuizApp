@@ -5,7 +5,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
+import android.widget.TextView
+import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import com.example.quizapp.R
+import com.example.quizapp.models.numCompletedQuizzes
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -21,6 +27,7 @@ class QuestionEndFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private lateinit var tryagain_button : Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,7 +42,27 @@ class QuestionEndFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_question_end, container, false)
+        var view=inflater.inflate(R.layout.fragment_question_end, container, false)
+        view?.apply {
+
+            initializeView(this)
+            registerListeners(this)
+        }
+
+        return view
+    }
+
+    private fun registerListeners(view: View) {
+        val result = view?.findViewById<TextView>(R.id.textView_result)
+        result?.setText(numCompletedQuizzes.toString())
+        tryagain_button.setOnClickListener {
+            Toast.makeText(activity, "Try again button pressed", Toast.LENGTH_SHORT).show()
+            findNavController().navigate(R.id.action_questionEndFragment_to_quizStartFragment)
+        }
+    }
+
+    private fun initializeView(view: View) {
+        tryagain_button=view.findViewById(R.id.tryagain_button)
     }
 
     companion object {

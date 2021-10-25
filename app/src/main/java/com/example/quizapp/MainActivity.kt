@@ -135,6 +135,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         Log.i(TAG,"onCreate()")
         setContentView(R.layout.activity_main)
+
     }
 
 
