@@ -35,6 +35,7 @@ class QuestionFragment : Fragment() {
     lateinit var answers: MutableList<String>
 
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -51,9 +52,8 @@ class QuestionFragment : Fragment() {
         randomizeQuestions()
         binding.nextButton.setOnClickListener {
             if (processAnswer(it)== true){
+                ++numCorrectAnswers
 
-                numCorrectAnswers++;
-                Log.i(TAG,"itt"+numCorrectAnswers.toString())
             }
             if ( questionIndex < numQuestions) {
 
@@ -65,7 +65,7 @@ class QuestionFragment : Fragment() {
                     //activate questionEndFragment
                     it.findNavController().navigate(R.id.action_questionFragment_to_questionEndFragment)
                     questionIndex = 0
-                    numCorrectAnswers = 0
+                   //numCorrectAnswers = 0
                 }
             }
         }
@@ -143,6 +143,7 @@ class QuestionFragment : Fragment() {
                 }
             }
         var questionIndex: Int = 0
+        var numCorrectAnswers = 0
     }
 }
 

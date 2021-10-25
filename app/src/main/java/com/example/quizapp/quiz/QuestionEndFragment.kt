@@ -1,6 +1,7 @@
 package com.example.quizapp.quiz
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +12,9 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.example.quizapp.R
-import com.example.quizapp.models.numCompletedQuizzes
+import com.example.quizapp.TAG
+import com.example.quizapp.models.numQuestions
+import com.example.quizapp.quiz.QuestionFragment.Companion.numCorrectAnswers
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -53,8 +56,10 @@ class QuestionEndFragment : Fragment() {
     }
 
     private fun registerListeners(view: View) {
-        val result = view?.findViewById<TextView>(R.id.textView_result)
-        result?.setText(numCompletedQuizzes.toString())
+        val textView_result = view?.findViewById<TextView>(R.id.textView_result)
+        val result= numQuestions.toString()+'/'+ numCorrectAnswers.toString()+" points"
+        textView_result?.setText(result)
+        numCorrectAnswers = 0
         tryagain_button.setOnClickListener {
             Toast.makeText(activity, "Try again button pressed", Toast.LENGTH_SHORT).show()
             findNavController().navigate(R.id.action_questionEndFragment_to_quizStartFragment)

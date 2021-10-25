@@ -2,9 +2,7 @@ package com.example.quizapp.models
 
 data class Question( val text:String,var answers : List<String>)
 
-
-var numCompletedQuizzes = 0
-
+val numQuestions = 3
 
 // One correct answer - the first one!!!
 val questions: MutableList<Question> = mutableListOf(
@@ -64,7 +62,7 @@ val questions: MutableList<Question> = mutableListOf(
     ),
     Question(
         text = "Which lifecycle method is called to make an activity visible?",
-        answers = listOf("osStart", "onPause", "onVisible", "onDestroy")
+        answers = listOf("onStart", "onPause", "onVisible", "onDestroy")
     ),
     Question(
         text = "Which lifecycle method is called to give an activity focus?",
