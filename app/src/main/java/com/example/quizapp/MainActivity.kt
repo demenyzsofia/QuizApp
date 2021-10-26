@@ -32,9 +32,6 @@ import java.lang.Exception
 import androidx.activity.result.ActivityResultCallback
 
 import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
-
-
 
 const val TAG:String ="MainActivity"
 const val USERNAME_EXTRA:String ="Username"
@@ -135,11 +132,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         Log.i(TAG,"onCreate()")
         setContentView(R.layout.activity_main)
-
+        
     }
-
-
 }
+
+
+
 
 
 

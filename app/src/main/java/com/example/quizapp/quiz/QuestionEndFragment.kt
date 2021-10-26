@@ -60,7 +60,7 @@ class QuestionEndFragment : Fragment() {
 
     private fun registerListeners(view: View) {
         val textView_result = view?.findViewById<TextView>(R.id.textView_result)
-        val result= viewModel.getNumQuestions().toString()+'/'+ numCorrectAnswers.toString()+" points"
+        val result= numCorrectAnswers.toString()+'/'+ viewModel.getNumQuestions().toString() +" points"
         textView_result?.setText(result)
         numCorrectAnswers = 0
         tryagain_button.setOnClickListener {

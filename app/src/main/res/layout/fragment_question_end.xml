@@ -46,8 +46,8 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="150dp"
-        android:layout_height="136dp"
+        android:layout_width="186dp"
+        android:layout_height="157dp"
         android:layout_marginTop="50dp"
         android:src="@drawable/quiz_result"
         app:layout_constraintEnd_toEndOf="parent"
