@@ -10,11 +10,13 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.quizapp.R
 import com.example.quizapp.TAG
-import com.example.quizapp.models.numQuestions
+//import com.example.quizapp.models.numQuestions
 import com.example.quizapp.quiz.QuestionFragment.Companion.numCorrectAnswers
+import com.example.quizapp.shared.QuizViewModel
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -31,6 +33,7 @@ class QuestionEndFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     private lateinit var tryagain_button : Button
+    private lateinit var viewModel: QuizViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,7 +60,7 @@ class QuestionEndFragment : Fragment() {
 
     private fun registerListeners(view: View) {
         val textView_result = view?.findViewById<TextView>(R.id.textView_result)
-        val result= numQuestions.toString()+'/'+ numCorrectAnswers.toString()+" points"
+        val result= viewModel.getNumQuestions().toString()+'/'+ numCorrectAnswers.toString()+" points"
         textView_result?.setText(result)
         numCorrectAnswers = 0
         tryagain_button.setOnClickListener {
@@ -68,6 +71,7 @@ class QuestionEndFragment : Fragment() {
 
     private fun initializeView(view: View) {
         tryagain_button=view.findViewById(R.id.tryagain_button)
+        viewModel = ViewModelProvider(this).get(QuizViewModel::class.java)
     }
 
     companion object {

@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import android.widget.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.example.quizapp.R
 import com.example.quizapp.TAG
@@ -33,7 +34,7 @@ class QuestionFragment : Fragment() {
     lateinit var binding: FragmentQuestionBinding
     lateinit var currentQuestion: Question
     lateinit var answers: MutableList<String>
-
+    private lateinit var viewModel: QuizViewModel
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,19 +50,20 @@ class QuestionFragment : Fragment() {
         //Inflate the layout for this fragment
         binding = DataBindingUtil.inflate<FragmentQuestionBinding>(
             inflater, R.layout.fragment_question, container, false)
+        viewModel = ViewModelProvider(this).get(QuizViewModel::class.java)
         randomizeQuestions()
         binding.nextButton.setOnClickListener {
             if (processAnswer(it)== true){
                 ++numCorrectAnswers
 
             }
-            if ( questionIndex < numQuestions) {
+            if ( questionIndex < viewModel.getNumQuestions()) {
 
                 //Show next question
                 it.findNavController().navigate(R.id.action_questionFragment_self)
             } else {
                 //End of the test
-                if (questionIndex == numQuestions) {
+                if (questionIndex == viewModel.getNumQuestions()) {
                     //activate questionEndFragment
                     it.findNavController().navigate(R.id.action_questionFragment_to_questionEndFragment)
                     questionIndex = 0
@@ -96,7 +98,7 @@ class QuestionFragment : Fragment() {
 
 
     private fun showQuestion() {
-        if (questionIndex == numQuestions-1){
+        if (questionIndex == viewModel.getNumQuestions()-1){
             binding.nextButton.text="Submit"
         }
         questionIndex++
