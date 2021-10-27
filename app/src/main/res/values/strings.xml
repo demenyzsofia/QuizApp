@@ -6,4 +6,17 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="quiz_result">Quiz result</string>
     <string name="again">TRY AGAIN</string>
+    <string name="profile">Profile</string>
+    <string name="quiz">Quiz time</string>
+    <string name="home">Home</string>
+    <string name="list">List of questions</string>
+    <string name="newquestion">New question</string>
+    <string name="choose">CHOOSE IMAGE</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="testskills">TEST YOUR SKILLS</string>
+    <string name="read">READ QUESTIONS</string>
+    <string name="create">CREATE QUESTION</string>
+    <string name="enjoy">Enjoy the quiz app, where you can:</string>
 </resources>

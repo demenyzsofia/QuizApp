@@ -2,8 +2,6 @@ package com.example.quizapp.models
 
 data class Question( val text:String,var answers : List<String>)
 
-//val numQuestions = 3
-
 // One correct answer - the first one!!!
 val questions: MutableList<Question> = mutableListOf(
     Question(

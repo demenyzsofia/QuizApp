@@ -32,12 +32,20 @@ import java.lang.Exception
 import androidx.activity.result.ActivityResultCallback
 
 import androidx.activity.result.ActivityResultLauncher
+import androidx.drawerlayout.widget.DrawerLayout
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
+import com.example.quizapp.quiz.QuizStartFragment
+import com.google.android.material.appbar.MaterialToolbar
+import com.google.android.material.navigation.NavigationView
 
 const val TAG:String ="MainActivity"
 const val USERNAME_EXTRA:String ="Username"
 
 class MainActivity : AppCompatActivity() {
-
+    private lateinit var topAppBar : MaterialToolbar
+    private lateinit var drawerLayout : DrawerLayout
+    private lateinit var navigationView : NavigationView
 //    //osztaly adatok
 //    private lateinit var playerName: EditText
 //    private lateinit var startButton: Button
@@ -128,11 +136,54 @@ class MainActivity : AppCompatActivity() {
 //        }
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        Log.i(TAG,"onCreate()")
-        setContentView(R.layout.activity_main)
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        Log.i(TAG,"onCreate()")
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        initializeView()
+
+        setSupportActionBar(topAppBar);
+        // This will display an Up icon (<-), we will replace it with hamburger later
+        supportActionBar?.setDisplayHomeAsUpEnabled(true);
+        initMenu()
+    }
+
+    private fun initializeView() {
+        topAppBar = findViewById(R.id.topAppBar)
+        drawerLayout = findViewById(R.id.drawerLayout)
+        navigationView = findViewById(R.id.navigationView)
+    }
+
+    private fun initMenu(){
+        topAppBar.setNavigationOnClickListener {
+            drawerLayout.open()
+        }
+
+        //menu item clicked
+        navigationView.setNavigationItemSelectedListener { menuItem ->
+            // Handle menu item selected
+            menuItem.isChecked = true
+            when (menuItem.itemId) {
+                R.id.home -> {
+                    findNavController( R.id.nav_host_fragment).navigate(R.id.homeFragment)
+                    menuItem.isChecked = true
+                    drawerLayout.close()
+                    true
+                }
+                R.id.quiz -> {
+                    Navigation.findNavController(this, R.id.nav_host_fragment).navigate(R.id.quizStartFragment)
+                    menuItem.isChecked = true
+                    drawerLayout.close()
+                    true
+                }
+                else ->{
+                     super.onOptionsItemSelected(menuItem)
+                }
+
+            }
+
+        }
     }
 }
 
