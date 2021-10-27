@@ -2,11 +2,14 @@ package com.example.quizapp.quiz
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.Activity.RESULT_OK
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.provider.ContactsContract
+import android.provider.MediaStore
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -14,6 +17,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContract
 
@@ -43,6 +47,11 @@ class QuizStartFragment : Fragment() {
     private lateinit var playerName: EditText
     private lateinit var startButton: Button
     private lateinit var contactButton : Button
+
+    lateinit var imageView: ImageView
+    lateinit var imagebutton: Button
+    private val pickImage = 100
+    private var imageUri: Uri? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -92,12 +101,18 @@ class QuizStartFragment : Fragment() {
         contactButton.setOnClickListener {
             getPerson.launch(0)
         }
+        imagebutton.setOnClickListener {
+            val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
+            startActivityForResult(gallery, pickImage)
+        }
     }
 
     private fun initializeView(view: View) {
         playerName= view.findViewById(R.id.playerNameInput)
         startButton = view.findViewById(R.id.startButton)
         contactButton = view.findViewById(R.id.contact_button)
+        imageView = view.findViewById(R.id.imageView)
+        imagebutton = view.findViewById(R.id.image_button)
     }
     class PickContact : ActivityResultContract<Int, Uri?>() {
         override fun createIntent(context: Context, ringtoneType: Int) =
@@ -108,6 +123,14 @@ class QuizStartFragment : Fragment() {
                 return null
             }
             return result?.data
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == RESULT_OK && requestCode == pickImage) {
+            imageUri = data?.data
+            imageView.setImageURI(imageUri)
         }
     }
 
