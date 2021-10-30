@@ -19,4 +19,6 @@
     <string name="read">READ QUESTIONS</string>
     <string name="create">CREATE QUESTION</string>
     <string name="enjoy">Enjoy the quiz app, where you can:</string>
+    <string name="menu_options">Menu options</string>
+    <string name="subtitle">Enjoy the quiz</string>
 </resources>

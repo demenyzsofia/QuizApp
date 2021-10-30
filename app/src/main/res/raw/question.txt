@@ -1,0 +1,110 @@
+What is the difference between val and var?
+Val is immutable, var is mutable.
+No difference.
+Var is immutable, val is mutable.
+Var is read-only.
+What does the joinToString function do?
+Merges the items in the list.
+Returns the length of the list.
+It compares two strings.
+It tells you how many items are in the list.
+What does the map do?
+Performs a transformation on the input list.
+We do not use it for lists.
+It creates a class.
+Interface definition.
+What is the open keyword?
+It can be derived from it.
+You can't derail it.
+Indicates an interface implementation.
+Indicates an abstract class.
+What is the name of the construct block in kotlin?
+init
+super
+override
+class
+What does lateinite mean?
+The expression only gets values later.
+The type of variable val.
+A variable var type.
+Define a new type.
+What type of function:fun string.lastChart()=this.get(this.length-1)?
+extension
+unit
+local
+top-level
+What is true about the set?
+There are no duplicates in it.
+There are duplicates in it.
+There is no use for a balanced search tree.
+We can't store items in it
+How we are similar in the following example: S1===S2
+according to reference
+according to content
+by type
+according to the beginner
+What is Android Jetpack?
+All of these
+Tools
+Documentation
+Libraries
+What is the base class for layouts?
+ViewGroup
+ViewSet
+ViewCollection
+ViewRoot
+What layout do you use for complex screens?
+ConstraintLayout
+GridLayout
+LinearLayout
+FrameLayout
+What do you use to push structured data into a layout?
+Data binding
+Data pushing
+Set text
+An OnClick method
+What method do you use to inflate layouts in fragments?
+onCreateView()
+onActivityCreated()
+onCreateLayout()
+onInflateLayout()
+What's the build system for Android?
+Gradle
+Graddle
+Grodle
+Groyle
+Which class do you use to create a vector drawable?
+VectorDrawable
+AndroidVectorDrawable
+DrawableVector
+AndroidVector
+Which one of these is an Android navigation component?
+NavController
+NavCentral
+NavMaster
+NavSwitcher
+Which XML element lets you register an activity with the launcher activity?
+intent-filter
+app-registry
+launcher-registry
+app-launcher
+What do you use to mark a layout for data binding?
+<layout>
+<binding>
+<data-binding>
+<dbinding>
+Which of the following is NOT an activity lifecycle state?
+Waiting
+Started
+Created
+Destroyed
+Which lifecycle method is called to make an activity visible?
+onStart
+onPause
+onVisible
+onDestroy
+Which lifecycle method is called to give an activity focus?
+onResume
+onFocus
+onVisible
+onStart

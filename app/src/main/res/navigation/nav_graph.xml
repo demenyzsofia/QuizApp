@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_homeFragment_to_quizStartFragment"
             app:destination="@id/quizStartFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_questionListFragment"
+            app:destination="@id/questionListFragment" />
     </fragment>
 
     <fragment
@@ -45,6 +48,16 @@
             android:id="@+id/action_questionEndFragment_to_quizStartFragment"
             app:destination="@id/quizStartFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.quizapp.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/questionListFragment"
+        android:name="com.example.quizapp.QuestionListFragment"
+        android:label="fragment_question_list"
+        tools:layout="@layout/fragment_question_list" />
 
 
 </navigation>

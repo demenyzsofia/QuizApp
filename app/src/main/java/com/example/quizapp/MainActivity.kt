@@ -32,11 +32,17 @@ import java.lang.Exception
 import androidx.activity.result.ActivityResultCallback
 
 import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.viewModels
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
+import androidx.navigation.ui.NavigationUI
+import androidx.navigation.ui.setupWithNavController
 import com.example.quizapp.quiz.QuizStartFragment
+import com.example.quizapp.shared.QuizViewModel
 import com.google.android.material.appbar.MaterialToolbar
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 
 const val TAG:String ="MainActivity"
@@ -141,12 +147,15 @@ class MainActivity : AppCompatActivity() {
         Log.i(TAG,"onCreate()")
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+       val viewModel : QuizViewModel by viewModels()
         initializeView()
 
         setSupportActionBar(topAppBar);
         // This will display an Up icon (<-), we will replace it with hamburger later
         supportActionBar?.setDisplayHomeAsUpEnabled(true);
         initMenu()
+
     }
 
     private fun initializeView() {
@@ -173,6 +182,12 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.quiz -> {
                     Navigation.findNavController(this, R.id.nav_host_fragment).navigate(R.id.quizStartFragment)
+                    menuItem.isChecked = true
+                    drawerLayout.close()
+                    true
+                }
+                R.id.profile -> {
+                    Navigation.findNavController(this, R.id.nav_host_fragment).navigate(R.id.profileFragment)
                     menuItem.isChecked = true
                     drawerLayout.close()
                     true

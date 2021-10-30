@@ -10,12 +10,11 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.quizapp.R
 import com.example.quizapp.TAG
-//import com.example.quizapp.models.numQuestions
-import com.example.quizapp.quiz.QuestionFragment.Companion.numCorrectAnswers
 import com.example.quizapp.shared.QuizViewModel
 
 // TODO: Rename parameter arguments, choose names that match
@@ -33,7 +32,7 @@ class QuestionEndFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     private lateinit var tryagain_button : Button
-    private lateinit var viewModel: QuizViewModel
+    private val viewModel: QuizViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,9 +59,9 @@ class QuestionEndFragment : Fragment() {
 
     private fun registerListeners(view: View) {
         val textView_result = view?.findViewById<TextView>(R.id.textView_result)
-        val result= numCorrectAnswers.toString()+'/'+ viewModel.getNumQuestions().toString() +" points"
+        val result= viewModel.getCurrentnumCorrectAnswers().toString()+'/'+ viewModel.getNumQuestions().toString() +" points"
         textView_result?.setText(result)
-        numCorrectAnswers = 0
+        viewModel.getUpdatednumAnswers()
         tryagain_button.setOnClickListener {
             Toast.makeText(activity, "Try again button pressed", Toast.LENGTH_SHORT).show()
             findNavController().navigate(R.id.action_questionEndFragment_to_quizStartFragment)
@@ -71,7 +70,6 @@ class QuestionEndFragment : Fragment() {
 
     private fun initializeView(view: View) {
         tryagain_button=view.findViewById(R.id.tryagain_button)
-        viewModel = ViewModelProvider(this).get(QuizViewModel::class.java)
     }
 
     companion object {

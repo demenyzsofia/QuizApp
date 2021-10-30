@@ -12,7 +12,6 @@ import androidx.navigation.fragment.findNavController
 import android.widget.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.example.quizapp.R
 import com.example.quizapp.TAG
@@ -23,11 +22,6 @@ import androidx.activity.OnBackPressedCallback
 
 import androidx.annotation.NonNull
 import android.content.DialogInterface
-
-
-
-
-
 
 
 
@@ -46,8 +40,7 @@ class QuestionFragment : Fragment() {
     lateinit var binding: FragmentQuestionBinding
     lateinit var currentQuestion: Question
     lateinit var answers: MutableList<String>
-    private lateinit var viewModel: QuizViewModel
-
+    private val viewModel: QuizViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,24 +55,21 @@ class QuestionFragment : Fragment() {
         //Inflate the layout for this fragment
         binding = DataBindingUtil.inflate<FragmentQuestionBinding>(
             inflater, R.layout.fragment_question, container, false)
-        viewModel = ViewModelProvider(this).get(QuizViewModel::class.java)
         randomizeQuestions()
         binding.nextButton.setOnClickListener {
             if (processAnswer(it)== true){
-                ++numCorrectAnswers
-
+                viewModel.getUpdatednumCorrectAnswers()
             }
-            if ( questionIndex < viewModel.getNumQuestions()) {
+            if ( viewModel.getQuestionIndex() < viewModel.getNumQuestions()) {
 
                 //Show next question
                 it.findNavController().navigate(R.id.action_questionFragment_self)
             } else {
                 //End of the test
-                if (questionIndex == viewModel.getNumQuestions()) {
+                if (viewModel.getQuestionIndex() == viewModel.getNumQuestions()) {
                     //activate questionEndFragment
                     it.findNavController().navigate(R.id.action_questionFragment_to_questionEndFragment)
-                    questionIndex = 0
-                   //numCorrectAnswers = 0
+                    viewModel.getUpdatedQuestionIndexNull()
                 }
             }
         }
@@ -110,11 +100,11 @@ class QuestionFragment : Fragment() {
 
 
     private fun showQuestion() {
-        if (questionIndex == viewModel.getNumQuestions()-1){
+        if (viewModel.getQuestionIndex() == viewModel.getNumQuestions()-1){
             binding.nextButton.text="Submit"
         }
-        questionIndex++
-        val index = questionIndex
+        viewModel.getUpdatedQuestionIndex()
+        val index = viewModel.getQuestionIndex()
         val questionTextStr = "$index. " + currentQuestion.text
         binding.textViewQuestion.text = questionTextStr
         binding.firstAnswerButton.text = answers[0]
@@ -125,7 +115,7 @@ class QuestionFragment : Fragment() {
     }
 
     private fun setQuestion() {
-        currentQuestion = questions[questionIndex]
+        currentQuestion = viewModel.questions[viewModel.getQuestionIndex()]
         //randomize the answers into a copy of the array
         answers = currentQuestion.answers.toMutableList()
         //shiffle anwsert
@@ -133,7 +123,7 @@ class QuestionFragment : Fragment() {
         showQuestion()
     }
     private fun randomizeQuestions() {
-        questions.shuffle()
+        viewModel.questions.shuffle()
         setQuestion()
     }
     override fun onAttach(context: Context) {
@@ -189,8 +179,6 @@ class QuestionFragment : Fragment() {
                     putString(ARG_PARAM2, param2)
                 }
             }
-        var questionIndex: Int = 0
-        var numCorrectAnswers = 0
     }
 }
 
