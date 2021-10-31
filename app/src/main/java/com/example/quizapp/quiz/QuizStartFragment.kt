@@ -20,6 +20,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContract
+import androidx.fragment.app.activityViewModels
 
 import androidx.navigation.fragment.findNavController
 
@@ -27,7 +28,7 @@ import androidx.navigation.fragment.findNavController
 
 import com.example.quizapp.R
 import com.example.quizapp.TAG
-
+import com.example.quizapp.shared.QuizViewModel
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -48,10 +49,12 @@ class QuizStartFragment : Fragment() {
     private lateinit var startButton: Button
     private lateinit var contactButton : Button
 
+
     lateinit var imageView: ImageView
     lateinit var imagebutton: Button
     private val pickImage = 100
     private var imageUri: Uri? = null
+    private val viewModel: QuizViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -96,6 +99,8 @@ class QuizStartFragment : Fragment() {
         startButton.setOnClickListener{
             Toast.makeText(activity,"Start button pressed",Toast.LENGTH_SHORT).show()
             Log.i(TAG,playerName.text.toString())
+
+            viewModel.getUpdatePlyerName(playerName.text.toString())
             findNavController().navigate(R.id.action_quizStartFragment_to_questionFragment)
         }
         contactButton.setOnClickListener {

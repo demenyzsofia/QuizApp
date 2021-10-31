@@ -61,8 +61,12 @@ class QuestionEndFragment : Fragment() {
         val textView_result = view?.findViewById<TextView>(R.id.textView_result)
         val result= viewModel.getCurrentnumCorrectAnswers().toString()+'/'+ viewModel.getNumQuestions().toString() +" points"
         textView_result?.setText(result)
-        viewModel.getUpdatednumAnswers()
+        //high score frissitjuk ha jobb eredmenyt ertunk el
+        viewModel.getUpdatehighScore()
+
         tryagain_button.setOnClickListener {
+            //nullazuk a valaszok szamak, mivel ujrakezdodik a quiz
+            viewModel.getUpdatednumAnswers()
             Toast.makeText(activity, "Try again button pressed", Toast.LENGTH_SHORT).show()
             findNavController().navigate(R.id.action_questionEndFragment_to_quizStartFragment)
         }

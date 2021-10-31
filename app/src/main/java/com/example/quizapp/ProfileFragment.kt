@@ -1,14 +1,15 @@
 package com.example.quizapp
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.Toast
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
+import android.widget.EditText
+import android.widget.TextView
+import androidx.fragment.app.activityViewModels
+import com.example.quizapp.shared.QuizViewModel
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -17,16 +18,16 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [homeFragment.newInstance] factory method to
+ * Use the [ProfileFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class homeFragment : Fragment() {
+class ProfileFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    private lateinit var testButton : Button
-    private lateinit var readButton : Button
-    private lateinit var createButton : Button
+    private val viewModel: QuizViewModel by activityViewModels()
+    private lateinit var playerName : EditText
+    private lateinit var highScorePoint : TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,32 +42,23 @@ class homeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_home, container, false)
-        //ha nem null
+        var view=inflater.inflate(R.layout.fragment_profile, container, false)
         view?.apply {
+
             initializeView(this)
-            registerListeners(this)
+
+            highScorePoint.setText(viewModel.gethighScore().toString()+" points")
+
+            playerName.setText(viewModel.getPlyerName())
         }
+
         return view
     }
 
-    private fun registerListeners(view: View) {
-        testButton.setOnClickListener{
-            Toast.makeText(activity,"Test your skills button pressed", Toast.LENGTH_SHORT).show()
-            findNavController().navigate(R.id.action_homeFragment_to_quizStartFragment)
-        }
-
-        readButton.setOnClickListener{
-            it.findNavController().navigate(R.id.action_homeFragment_to_questionListFragment)
-        }
-
-
-    }
 
     private fun initializeView(view: View) {
-        testButton=view.findViewById(R.id.testbutton)
-        readButton=view.findViewById(R.id.readbutton)
-        createButton=view.findViewById(R.id.createbutton)
+        playerName=view.findViewById(R.id.InputplayerName)
+        highScorePoint=view.findViewById(R.id.highScorePoint)
     }
 
     companion object {
@@ -76,12 +68,12 @@ class homeFragment : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment homeFragment.
+         * @return A new instance of fragment ProfileFragment.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            homeFragment().apply {
+            ProfileFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)

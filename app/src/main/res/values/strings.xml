@@ -21,4 +21,6 @@
     <string name="enjoy">Enjoy the quiz app, where you can:</string>
     <string name="menu_options">Menu options</string>
     <string name="subtitle">Enjoy the quiz</string>
+    <string name="player">Player name:</string>
+    <string name="highScore">High score</string>
 </resources>

@@ -15,6 +15,7 @@ class QuizViewModel(application : Application) : AndroidViewModel(application) {
     private var numCorrectAnswers = 0
     private var questiobIndex = 0
     private var highScore: Int = 0
+    private var playerName: String =""
     private val context = getApplication<Application>().applicationContext
     val questions = arrayListOf<Question>()
 
@@ -67,4 +68,23 @@ class QuizViewModel(application : Application) : AndroidViewModel(application) {
         return questiobIndex
     }
 
+    fun gethighScore():Int{
+        return highScore
+    }
+
+    fun getUpdatehighScore():Int{
+        if(highScore < numCorrectAnswers){
+            highScore =numCorrectAnswers
+        }
+        return highScore
+    }
+
+    fun getPlyerName():String{
+        return playerName
+    }
+
+    fun getUpdatePlyerName(name : String):String{
+        playerName=name
+        return playerName
+    }
 }
