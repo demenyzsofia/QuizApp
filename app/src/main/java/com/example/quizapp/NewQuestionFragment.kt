@@ -6,9 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.Toast
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
+import android.widget.EditText
+import androidx.fragment.app.activityViewModels
+import com.example.quizapp.models.Question
+import com.example.quizapp.shared.QuizViewModel
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -17,16 +18,21 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [homeFragment.newInstance] factory method to
+ * Use the [NewQuestionFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class homeFragment : Fragment() {
+class NewQuestionFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    private lateinit var testButton : Button
-    private lateinit var readButton : Button
-    private lateinit var createButton : Button
+    private lateinit var addQuestionButton : Button
+    private lateinit var questionText: EditText
+    private lateinit var correctAns: EditText
+    private lateinit var ans2: EditText
+    private lateinit var ans3: EditText
+    private lateinit var ans4: EditText
+
+    private val viewModel: QuizViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,7 +47,7 @@ class homeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_home, container, false)
+        val view = inflater.inflate(R.layout.fragment_new_question, container, false)
         //ha nem null
         view?.apply {
             initializeView(this)
@@ -51,26 +57,29 @@ class homeFragment : Fragment() {
     }
 
     private fun registerListeners(view: View) {
-        testButton.setOnClickListener{
-            Toast.makeText(activity,"Test your skills button pressed", Toast.LENGTH_SHORT).show()
-            findNavController().navigate(R.id.action_homeFragment_to_quizStartFragment)
+        addQuestionButton.setOnClickListener{
+            val answers = arrayListOf<String>(correctAns.text.toString(), ans2.text.toString(), ans3.text.toString(), ans4.text.toString())
+            val question = Question(questionText.text.toString(), answers)
+            //hoazzadjuk a kerdest
+            viewModel.questions.add(question)
+            //toroljuk a tartalmakat
+            questionText.text.clear()
+            correctAns.text.clear()
+            ans2.text.clear()
+            ans3.text.clear()
+            ans4.text.clear()
         }
-
-        readButton.setOnClickListener{
-            it.findNavController().navigate(R.id.action_homeFragment_to_questionListFragment)
-        }
-
-        createButton.setOnClickListener{
-            it.findNavController().navigate(R.id.action_homeFragment_to_newQuestionFragment)
-        }
-
-
     }
 
     private fun initializeView(view: View) {
-        testButton=view.findViewById(R.id.testbutton)
-        readButton=view.findViewById(R.id.readbutton)
-        createButton=view.findViewById(R.id.createbutton)
+        addQuestionButton = view.findViewById(R.id.buttonAddQuestion)
+        questionText=view.findViewById(R.id.editTextQuestion)
+        correctAns=view.findViewById(R.id.editTextAns1)
+        ans2=view.findViewById(R.id.editTextAns2)
+        ans3=view.findViewById(R.id.editTextAns3)
+        ans4=view.findViewById(R.id.editTextAns4)
+
+
     }
 
     companion object {
@@ -80,12 +89,12 @@ class homeFragment : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment homeFragment.
+         * @return A new instance of fragment NewQuestionFragment.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            homeFragment().apply {
+            NewQuestionFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)

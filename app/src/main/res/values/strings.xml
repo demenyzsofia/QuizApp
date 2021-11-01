@@ -23,4 +23,11 @@
     <string name="subtitle">Enjoy the quiz</string>
     <string name="player">Player name:</string>
     <string name="highScore">High score</string>
+    <string name="details">DETAILS</string>
+    <string name="delete">DELETE</string>
+    <string name="answer">Single answer</string>
+    <string name="ans">Answers</string>
+    <string name="addQuestion">ADD QUESTION</string>
+    <string name="oneans">Answer</string>
+    <string name="correctans">Correct answer</string>
 </resources>

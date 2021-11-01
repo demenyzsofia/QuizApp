@@ -149,6 +149,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
        val viewModel : QuizViewModel by viewModels()
+
         initializeView()
 
         setSupportActionBar(topAppBar);
@@ -188,6 +189,18 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.profile -> {
                     Navigation.findNavController(this, R.id.nav_host_fragment).navigate(R.id.profileFragment)
+                    menuItem.isChecked = true
+                    drawerLayout.close()
+                    true
+                }
+                R.id.listofquestions -> {
+                    Navigation.findNavController(this, R.id.nav_host_fragment).navigate(R.id.questionListFragment)
+                    menuItem.isChecked = true
+                    drawerLayout.close()
+                    true
+                }
+                R.id.newquestion -> {
+                    Navigation.findNavController(this, R.id.nav_host_fragment).navigate(R.id.newQuestionFragment)
                     menuItem.isChecked = true
                     drawerLayout.close()
                     true
