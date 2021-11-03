@@ -8,6 +8,7 @@ import java.io.InputStreamReader
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import com.example.quizapp.R
+import com.example.quizapp.models.Item
 
 
 class QuizViewModel(application : Application) : AndroidViewModel(application) {
@@ -18,6 +19,10 @@ class QuizViewModel(application : Application) : AndroidViewModel(application) {
     private var playerName: String =""
     private val context = getApplication<Application>().applicationContext
     val questions = arrayListOf<Question>()
+
+    var list= arrayListOf<Item>()
+
+    var currentPosition: Int = 0
 
     init {
         loadQuestions()
@@ -87,4 +92,28 @@ class QuizViewModel(application : Application) : AndroidViewModel(application) {
         playerName=name
         return playerName
     }
+
+
+    fun getItem(): Item {
+        return list[currentPosition]
+    }
+
+
+    fun getOneQuestion(index:Int):String{
+        return questions[index].text
+    }
+    fun getOneAnswer(index:Int):String{
+        return questions[index].answers[0]
+    }
+
+    fun setItemList(listItem : ArrayList<Item>){
+        list=listItem
+    }
+
+    fun remove(poz: Int):ArrayList<Item>{
+        list.removeAt(poz)
+        return list
+    }
+
+
 }
