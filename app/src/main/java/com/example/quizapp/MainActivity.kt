@@ -151,10 +151,6 @@ class MainActivity : AppCompatActivity() {
        val viewModel : QuizViewModel by viewModels()
 
         initializeView()
-
-        setSupportActionBar(topAppBar);
-        // This will display an Up icon (<-), we will replace it with hamburger later
-        supportActionBar?.setDisplayHomeAsUpEnabled(true);
         initMenu()
 
     }

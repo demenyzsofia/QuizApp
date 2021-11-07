@@ -1,6 +1,7 @@
 package com.example.quizapp
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -73,7 +74,9 @@ class QuestionListFragment : Fragment(), DataAdapter.OnItemClickListener {
     override fun onDeleteClick(position: Int) {
         list.removeAt(position)
         viewModel.remove(position)
-        if (!(position < 0 || position >= viewModel.questions.size)) {
+        Log.i(TAG,position.toString())
+        if (position >=0 && position <viewModel.questions.size) {
+
             viewModel.questions.removeAt(position)
             adapter.notifyItemRemoved(position)
             recycler_view.adapter?.notifyItemRemoved(position)

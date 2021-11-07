@@ -1,4 +1,5 @@
 package com.example.quizapp
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +16,7 @@ class DataAdapter(private val DataList: List<Item>,
                   ) : RecyclerView.Adapter<DataAdapter.DataViewHolder>(){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DataViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_layout,parent,false)
+        Log.i(TAG,"onCreateViewHolder()")
         return DataViewHolder(itemView)
     }
 
@@ -23,7 +25,7 @@ class DataAdapter(private val DataList: List<Item>,
         holder.textView1.text = currentItem.text1
         holder.textView2.text = currentItem.text2
 
-
+        Log.i(TAG,"onBindViewHolder()")
     }
 
     override fun getItemCount(): Int {
@@ -33,8 +35,8 @@ class DataAdapter(private val DataList: List<Item>,
     inner class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
         val textView1 : TextView = itemView.findViewById(R.id.question)
         val textView2: TextView = itemView.findViewById(R.id.correctanswer)
-        val buttonDetail : Button = itemView.findViewById(R.id.buttonDetails)
-        val buttonDelete : Button = itemView.findViewById(R.id.buttonDelete)
+        private val buttonDetail : Button = itemView.findViewById(R.id.buttonDetails)
+        private val buttonDelete : Button = itemView.findViewById(R.id.buttonDelete)
 
         init{
 
