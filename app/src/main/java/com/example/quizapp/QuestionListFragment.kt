@@ -73,7 +73,6 @@ class QuestionListFragment : Fragment(), DataAdapter.OnItemClickListener {
 
     override fun onDeleteClick(position: Int) {
         list.removeAt(position)
-        viewModel.remove(position)
         Log.i(TAG,position.toString())
         if (position >=0 && position <viewModel.questions.size) {
 
