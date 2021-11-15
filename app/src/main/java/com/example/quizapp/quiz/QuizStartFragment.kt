@@ -97,11 +97,17 @@ class QuizStartFragment : Fragment() {
     }
     private fun registerListeners(view: View) {
         startButton.setOnClickListener{
-            Toast.makeText(activity,"Start button pressed",Toast.LENGTH_SHORT).show()
-            Log.i(TAG,playerName.text.toString())
+            val msg: String = playerName.text.toString()
+            if(msg.trim().length == 0) {
+                Toast.makeText(activity, "The player name is empty!", Toast.LENGTH_SHORT).show()
+            }else {
 
-            viewModel.getUpdatePlyerName(playerName.text.toString())
-            findNavController().navigate(R.id.action_quizStartFragment_to_questionFragment)
+                Toast.makeText(activity, "Start button pressed", Toast.LENGTH_SHORT).show()
+                Log.i(TAG, playerName.text.toString())
+
+                viewModel.getUpdatePlyerName(playerName.text.toString())
+                findNavController().navigate(R.id.action_quizStartFragment_to_questionFragment)
+            }
         }
         contactButton.setOnClickListener {
             getPerson.launch(0)
